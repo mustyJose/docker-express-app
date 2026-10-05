@@ -6,8 +6,6 @@ const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 
-connectDB();
-
 app.use(express.json());
 
 app.use("/users", userRoutes);
@@ -18,6 +16,12 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+if (require.main === module) {
+  connectDB();
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+module.exports = app;
